@@ -3,6 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpRequest,JsonResponse,HttpResponseRedirect
 from models import *
 from hashlib import sha1
+from . import user_decorator
 
 # Create your views here.
 
@@ -63,6 +64,7 @@ def login_handle(request):
                 red.set_cookie('uname','',max_age=-1)
             request.session['user_id']=users[0].id
             request.session['user_name']=uname
+            request.session.set_expiry(0)
             return red
         else:
             context = {'uname': uname, 'error_name': 0, 'error_pwd': 1}
@@ -76,17 +78,29 @@ def logout(request):
     request.session.flush()
     return redirect('/')
 
+@user_decorator.login
 def user_center_info(request):
     user = User.objects.get(id=request.session.get('user_id',''))
     tel = user.utel
-    if tel == None:
+    if tel == '':
         tel = "无"
         context = {'uname':user.uname,'utel':tel,'uemail':user.ue_mail}
     return render(request,'ds_user/user_center_info.html',context)
 
+@user_decorator.login
 def user_center_order(request):
     return render(request,'ds_user/user_center_order.html')
 
+@user_decorator.login
 def user_center_site(request):
-    return render(request,'ds_user/user_center_site.html')
+    user = User.objects.get(id=request.session.get('user_id',''))
+    if request.method == 'POST':
+        post = request.POST
+        user.rec_name = post.get('rec_name')
+        user.rec_tel = post.get('rec_tel')
+        user.rec_add = post.get('rec_add')
+        user.rec_postcode = post.get('rec_postcode')
+
+        user.save()
+    return render(request,'ds_user/user_center_site.html',{'user':user})
 
