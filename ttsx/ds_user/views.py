@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpRequest,JsonResponse,HttpResponseRedirect
 from models import *
@@ -61,16 +62,14 @@ def login_handle(request):
             else:
                 red.set_cookie('uname','',max_age=-1)
             request.session['user_id']=users[0].id
-            print users
-            print users[0]
             request.session['user_name']=uname
             return red
         else:
             context = {'uname': uname, 'error_name': 0, 'error_pwd': 1}
-            return render(request,'ds_user//login.html',context)
+            return render(request,'ds_user/login.html',context)
     else:
         context = {'uname': uname, 'error_name': 1, 'error_pwd': 0}
-        return render(request, 'ds_user//login.html', context)
+        return render(request, 'ds_user/login.html', context)
 
 
 def logout(request):
@@ -78,7 +77,12 @@ def logout(request):
     return redirect('/')
 
 def user_center_info(request):
-    return render(request,'ds_user/user_center_info.html')
+    user = User.objects.get(id=request.session.get('user_id',''))
+    tel = user.utel
+    if tel == None:
+        tel = "无"
+        context = {'uname':user.uname,'utel':tel,'uemail':user.ue_mail}
+    return render(request,'ds_user/user_center_info.html',context)
 
 def user_center_order(request):
     return render(request,'ds_user/user_center_order.html')
