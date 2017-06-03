@@ -7,35 +7,32 @@ from . import user_decorator
 
 # Create your views here.
 
-def index(request):
-    return render(request,'ds_user/index.html')
 
 def register(request):
-    return render(request,'ds_user/register.html')
+    return render(request,'ds_user/register.html')# 显示注册页
 
 def register_handle(request):
-    post = request.POST
-    uname = post.get('user_name')
-    upwd = post.get('pwd')
-    ucpwd = post.get('cpwd')
-    uemail = post.get('email')
+    # 注册提交处理页面
+    post = request.POST # 创建一个post对象
+    uname = post.get('user_name')# 获取提交的名字属性
+    upwd = post.get('pwd') #　获取提交的密码
+    ucpwd = post.get('cpwd')# 获取提交的二次密码
+    uemail = post.get('email')# 获取注册的邮箱
 
-    s1 = sha1()
-    s1.update(upwd)
-    upwd2 = s1.hexdigest()
-    user = User()
-    user.uname = uname
-    user.upasswd = upwd2
-    user.ue_mail = uemail
-    print 1
-    user.save()
-    print 2
-    return redirect('/login/')
+    s1 = sha1()# 创建一个sha1对象
+    s1.update(upwd)# 将密码加密
+    upwd2 = s1.hexdigest()# 获取加密后的密码
+    user = User()# 创建一个ｕser对象
+    user.uname = uname# 添加name属性
+    user.upasswd = upwd2# 添加密码属性
+    user.ue_mail = uemail# 添加邮箱属性
+    user.save()# 将数据保存添加
+    return redirect('/login/')# 注册成功跳转到登陆页
 
-def register_exist(request):
-    uname = request.GET.get('uname')
-    count = User.objects.filter(uname=uname).count()
-    return JsonResponse({'count':count})
+def register_exist(request):# 进行注册验证
+    uname = request.GET.get('uname')# 获取用户输入的name
+    count = User.objects.filter(uname=uname).count()# 在数据库查找获取到的名字个数
+    return JsonResponse({'count':count})# 返回一个ｊｓｏｎ对象
 
 
 def login(request):
@@ -100,7 +97,6 @@ def user_center_site(request):
         user.rec_tel = post.get('rec_tel')
         user.rec_add = post.get('rec_add')
         user.rec_postcode = post.get('rec_postcode')
-
         user.save()
     return render(request,'ds_user/user_center_site.html',{'user':user})
 

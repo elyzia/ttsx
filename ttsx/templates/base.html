@@ -18,7 +18,7 @@
 			<div class="fr">
 				{%if request.session.user_name|default:'' != ''%}
 				<div class="login_btn fl">
-					欢迎您：<a href="/user_center_info/">{{request.session.user_name}}</a>
+					欢迎您：<em><a href="/user_center_info/">{{request.session.user_name}}</a></em>
 					<span>|</span>
 					<a href="/logout/">退出</a>
 				</div>
