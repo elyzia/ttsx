@@ -3,5 +3,5 @@ import views
 
 urlpatterns=[
     url(r'^$',views.index),
-
+    url(r'^list(\d+)_(\d*)/$',views.list)
 ]

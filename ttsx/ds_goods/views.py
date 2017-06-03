@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from models import *
+from django.core.paginator import Paginator,Page
 
 # Create your views here.
 def index(request):
@@ -21,3 +22,19 @@ def index(request):
                't5_click':t5_click,'t5_new':t5_new,'t6_click':t6_click,'t6_new':t6_new
             }
     return render(request,'ds_goods/index.html',context) # 显示主页
+
+
+def list(request,gid,gindex):
+    num = request.GET.get('gnum')
+    if num == '0':
+        t_list = GoodsInfo.objects.filter(gtype_id=gid).order_by('-id')
+    elif num == '1':
+        t_list = GoodsInfo.objects.filter(gtype_id=gid).order_by('-gprice')
+    else:
+        t_list = GoodsInfo.objects.filter(gtype_id=gid).order_by('-gclick')
+    t_new = GoodsInfo.objects.filter(gtype_id=gid).order_by('-id')[0:2]
+    t_title = TypeInfo.objects.get(id=gid)
+    paginator = Paginator(t_list,10)# 每页显示的数量
+    page = paginator.page(gindex)# 显示第几页
+    context = {'t_title':t_title,'t_new':t_new,'page':page,'gid':gid,'num':num}
+    return render(request,'ds_goods/list.html',context)
