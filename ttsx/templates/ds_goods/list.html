@@ -1,0 +1,68 @@
+{%extends 'ds_goods/base.html'%}
+{%block title%} <title>天天生鲜-商品列表</title>{%endblock title%}
+{%block content%}
+
+	<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">{{t_title.ttitel}}</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					{%for new in t_new%}
+					<li>
+						<a href="/detail{{list.id}}/"><img src="/static/{{new.gpic}}"></a>
+						<h4><a href="/detail{{list.id}}/">{{new.gtitle|truncatechars:15}}</a></h4>
+						<div class="prize">￥{{new.gprice}}</div>
+					</li>
+					{%endfor%}
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<div class="sort_bar">
+
+				<a href="/list{{gid}}_{{page.number}}/?gnum=0" {%if num == '0'%}class="active" {%endif%}>默认</a>
+				<a href="/list{{gid}}_{{page.number}}/?gnum=1" {%if num == '1'%}class="active" {%endif%}>价格</a>
+				<a href="/list{{gid}}_{{page.number}}/?gnum=2" {%if num == '2'%}class="active" {%endif%}>人气</a>
+			</div>
+
+			<ul class="goods_type_list clearfix">
+				{%for list in page%}
+				<li>
+					<a href="/detail{{list.id}}/"><img src="/static/{{list.gpic}}"></a>
+					<h4><a href="/detail{{list.id}}/">{{list.gtitle}}</a></h4>
+					<div class="operate">
+						<span class="prize">￥{{list.gprice}}</span>
+						<span class="unit">{{list.gprice}}/{{list.gunit}}</span>
+						<a href="#" class="add_goods" title="加入购物车"></a>
+					</div>
+				</li>
+				{%endfor%}
+			</ul>
+
+			<div class="pagenation">
+				{%if page.has_previous%}
+				<a href="/list{{gid}}_{{page.number|add:-1}}/?gnum={{num}}"><上一页</a>
+				{%endif%}
+
+				{%for index in page.paginator.page_range%}
+					{%if index == page.number%}
+						<a href="#" class="active">{{index}}</a>
+					{%else%}
+						<a href="/list{{gid}}/">{{index}}</a>
+					{%endif%}
+				{%endfor%}
+
+				{%if page.has_next%}
+					<a href="/list{{gid}}_{{page.number|add:1}}/?gnum={{num}}">下一页></a>
+				{%endif%}
+			</div>
+		</div>
+	</div>
+{%endblock content%}

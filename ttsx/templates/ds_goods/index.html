@@ -58,10 +58,10 @@
 			<div class="subtitle fl">
 				<span>|</span>
 				{%for click in t1_click%}
-				<a href="#">{{click.gtitle|truncatechars:15}}</a>
+				<a href="/detail{{click.id}}/">{{click.gtitle|truncatechars:15}}</a>
 				{%endfor%}
 			</div>
-			<a href="#" class="goods_more fr" id="fruit_more">查看更多 ></a>
+			<a href="/list1_1/?gnum=0" class="goods_more fr" id="fruit_more">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -69,8 +69,8 @@
 			<ul class="goods_list fl">
 				{%for new in t1_new%}
 				<li>
-					<h4><a href="#">{{new.gtitle}}</a></h4>
-					<a href="#"><img src="/static/{{new.gpic}}"></a>
+					<h4><a href="/detail{{new.id}}/">{{new.gtitle}}</a></h4>
+					<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
 					<div class="prize">¥{{new.gprice}}</div>
 				</li>
 				{%endfor%}
@@ -84,10 +84,10 @@
 			<div class="subtitle fl">
 				<span>|</span>
 				{%for click in t2_click%}
-				<a href="#">{{click.gtitle|truncatechars:15}}</a>
+				<a href="/detail{{click.id}}/">{{click.gtitle|truncatechars:15}}</a>
 				{%endfor%}
 			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/list2_1/?gnum=0" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -95,8 +95,8 @@
 			<ul class="goods_list fl">
 				{%for new in t2_new%}
 				<li>
-					<h4><a href="#">{{new.gtitle}}</a></h4>
-					<a href="#"><img src="/static/{{new.gpic}}"></a>
+					<h4><a href="/detail{{new.id}}/">{{new.gtitle}}</a></h4>
+					<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
 					<div class="prize">¥ {{new.gprice}}</div>
 				</li>
 				{%endfor%}
@@ -109,10 +109,10 @@
 			<div class="subtitle fl">
 				<span>|</span>
 				{%for click in t3_click%}
-				<a href="#">{{click.gtitle|truncatechars:15}}</a>
+				<a href="/detail{{click.id}}/">{{click.gtitle|truncatechars:15}}</a>
 				{%endfor%}
 			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/list3_1/?gnum=0" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -120,8 +120,8 @@
 			<ul class="goods_list fl">
 				{%for new in  t3_new%}
 				<li>
-					<h4><a href="#">{{new.gtitle}}</a></h4>
-					<a href="#"><img src="/static/{{new.gpic}}"></a>
+					<h4><a href="/detail{{new.id}}/">{{new.gtitle}}</a></h4>
+					<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
 					<div class="prize">¥ {{new.gprice}}</div>
 				</li>
 				{%endfor%}
@@ -135,10 +135,10 @@
 			<div class="subtitle fl">
 				<span>|</span>
 				{%for click in t4_click%}
-				<a href="#">{{click.gtitle|truncatechars:15}}</a>
+				<a href="/detail{{click.id}}/">{{click.gtitle|truncatechars:15}}</a>
 				{%endfor%}
 			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/list4_1/?gnum=0" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -146,8 +146,8 @@
 			<ul class="goods_list fl">
 				{%for new in t4_new%}
 				<li>
-					<h4><a href="#">{{new.gtitle}}</a></h4>
-					<a href="#"><img src="/static/{{new.gpic}}"></a>
+					<h4><a href="/detail{{new.id}}/">{{new.gtitle}}</a></h4>
+					<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
 					<div class="prize">¥ {{new.gprice}}</div>
 				</li>
 				{%endfor%}
@@ -161,10 +161,10 @@
 			<div class="subtitle fl">
 				<span>|</span>
 				{%for click in t5_click%}
-				<a href="#">{{click.gtitle|truncatechars:15}}</a>
+				<a href="/detail{{click.id}}/">{{click.gtitle|truncatechars:15}}</a>
 				{%endfor%}
 			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/list5_1/" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -172,8 +172,8 @@
 			<ul class="goods_list fl">
 				{%for new in t5_new%}
 				<li>
-					<h4><a href="#">{{new.gtitle}}</a></h4>
-					<a href="#"><img src="/static/{{new.gpic}}"></a>
+					<h4><a href="/detail{{new.id}}/">{{new.gtitle}}</a></h4>
+					<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
 					<div class="prize">¥ {{new.gprice}}</div>
 				</li>
 				{%endfor%}
@@ -187,10 +187,10 @@
 			<div class="subtitle fl">
 				<span>|</span>
 				{%for click in t6_click%}
-				<a href="#">{{click.gtitle}}</a>
+				<a href="/detail{{click.id}}/">{{click.gtitle}}</a>
 				{%endfor%}
 			</div>
-			<a href="#" class="goods_more fr">查看更多 ></a>
+			<a href="/list6_1/?gnum=0" class="goods_more fr">查看更多 ></a>
 		</div>
 
 		<div class="goods_con clearfix">
@@ -198,8 +198,8 @@
 			<ul class="goods_list fl">
 				{%for new in t6_new%}
 				<li>
-					<h4><a href="#">{{new.gtitle}}</a></h4>
-					<a href="#"><img src="/static/{{new.gpic}}"></a>
+					<h4><a href="/detail{{new.id}}/">{{new.gtitle}}</a></h4>
+					<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
 					<div class="prize">¥ {{new.gprice}}</div>
 				</li>
 				{%endfor%}
