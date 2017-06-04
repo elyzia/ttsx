@@ -44,5 +44,7 @@ def detail(request,gid):
     t_goods = GoodsInfo.objects.get(id=gid)# 根据id查找，返回一个GoodsInfo对象
     t_type = TypeInfo.objects.get(id=t_goods.gtype_id)# 根据分类查找，返回一个TypeInfo对象
     t_new = GoodsInfo.objects.filter(gtype_id=t_goods.gtype_id).order_by('-id')[0:2]# 根据分类查找，按照新品排序，返回一个对象
+    t_goods.gclick = t_goods.gclick + 1
+    t_goods.save()
     context = {'t_goods':t_goods,'t_type':t_type,'t_new':t_new}
     return render(request,'ds_goods/detail.html',context)

@@ -17,11 +17,11 @@
 		<div class="navbar">
 			<h1 class="fl">全部商品分类</h1>
 			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
+				<li><a href="/">首页</a></li>
 				<li class="interval">|</li>
-				<li><a href="">手机生鲜</a></li>
+				<li><a href="https://fresh.jd.com/">手机生鲜</a></li>
 				<li class="interval">|</li>
-				<li><a href="">抽奖</a></li>
+				<li><a href="http://act.daoju.qq.com/lol/aluckystar/index.htm">抽奖</a></li>
 			</ul>
 		</div>
 	</div>
@@ -206,4 +206,22 @@
 			</ul>
 		</div>
 	</div>
+
+	<script type="text/javascript" src="/static/js/slide.js"></script>
+	<script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(){
+			window.location.href = 'list.html';
+		}
+	</script>
 {%endblock body%}

@@ -3,7 +3,7 @@
 {%block content%}
 
 	<div class="breadcrumb">
-		<a href="#">全部分类</a>
+		<a href="/">全部分类</a>
 		<span>></span>
 		<a href="#">{{t_title.ttitel}}</a>
 	</div>
@@ -15,8 +15,8 @@
 				<ul>
 					{%for new in t_new%}
 					<li>
-						<a href="/detail{{list.id}}/"><img src="/static/{{new.gpic}}"></a>
-						<h4><a href="/detail{{list.id}}/">{{new.gtitle|truncatechars:15}}</a></h4>
+						<a href="/detail{{new.id}}/"><img src="/static/{{new.gpic}}"></a>
+						<h4><a href="/detail{{new.id}}/">{{new.gtitle|truncatechars:15}}</a></h4>
 						<div class="prize">￥{{new.gprice}}</div>
 					</li>
 					{%endfor%}

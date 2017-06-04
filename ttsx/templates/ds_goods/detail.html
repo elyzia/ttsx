@@ -1,10 +1,53 @@
 {%extends 'ds_goods/base.html'%}
 {%block title%} <title>天天生鲜-商品详情页</title>{%endblock title%}
+
+{%block head%}
+<script type="text/javascript">
+	function countTotal(){
+		price = parseFloat($('.show_pirze > em').text());
+		count = parseInt($('.num_show').val());
+		$('.total > em').text((price*count).toFixed(2)+'元');
+
+	}
+
+
+	$(function(){
+		$('.num_show').blur(function(){
+			countTotal()
+		});
+
+		$('.add').click(function(){
+			$('.num_show').val(parseInt($('.num_show').val())+1);
+			countTotal()
+		});
+
+
+		$('.minus').click(function(){
+			count = parseInt($('.num_show').val())-1;
+			if(count <= 1){
+				$('.num_show').val(1);
+			}
+
+			else{
+				$('.num_show').val(count);
+			}
+			countTotal()
+		});
+
+
+	})
+
+
+
+
+</script>
+{%endblock head%}
+
 {%block content%}
 	<div class="breadcrumb">
-		<a href="#">全部分类</a>
+		<a href="/">全部分类</a>
 		<span>></span>
-		<a href="#">{{t_type.ttitel}}</a>
+		<a href="/list{{t_type.id}}_1/?gnum=0">{{t_type.ttitel}}</a>
 		<span>></span>
 		<a href="#">商品详情</a>
 	</div>
@@ -27,7 +70,7 @@
 					<a href="javascript:;" class="minus fr">-</a>	
 				</div> 
 			</div>
-			<div class="total">总价：<em>16.80元</em></div>
+			<div class="total">总价：<em>{{t_goods.gprice}}元</em></div>
 			<div class="operate_btn">
 				<a href="javascript:;" class="buy_btn">立即购买</a>
 				<a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>				
@@ -70,8 +113,8 @@
 
 	<div class="add_jump"></div>
 
-	<script type="/static/text/javascript" src="js/jquery-1.12.2.js"></script>
-	<script type="/static/text/javascript">
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
 		var $add_x = $('#add_cart').offset().top;
 		var $add_y = $('#add_cart').offset().left;
 
