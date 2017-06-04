@@ -5,21 +5,21 @@ from django.core.paginator import Paginator,Page
 
 # Create your views here.
 def index(request):
-    t1_click = GoodsInfo.objects.filter(gtype_id=1).order_by('-gclick')[0:3]
-    t1_new = GoodsInfo.objects.filter(gtype_id=1).order_by('-id')[0:4]
-    t2_click = GoodsInfo.objects.filter(gtype_id=2).order_by('-gclick')[0:3]
-    t2_new = GoodsInfo.objects.filter(gtype_id=2).order_by('-id')[0:4]
-    t3_click = GoodsInfo.objects.filter(gtype_id=3).order_by('-gclick')[0:3]
-    t3_new = GoodsInfo.objects.filter(gtype_id=3).order_by('-id')[0:4]
-    t4_click = GoodsInfo.objects.filter(gtype_id=4).order_by('-gclick')[0:3]
-    t4_new = GoodsInfo.objects.filter(gtype_id=4).order_by('-id')[0:4]
-    t5_click = GoodsInfo.objects.filter(gtype_id=5).order_by('-gclick')[0:3]
-    t5_new = GoodsInfo.objects.filter(gtype_id=5).order_by('-id')[0:4]
-    t6_click = GoodsInfo.objects.filter(gtype_id=6).order_by('-gclick')[0:3]
-    t6_new = GoodsInfo.objects.filter(gtype_id=6).order_by('-id')[0:4]
-    context = {'t1_click':t1_click,'t1_new':t1_new,'t2_click':t2_click,'t2_new':t2_new,
-               't3_click':t3_click,'t3_new':t3_new,'t4_click':t4_click,'t4_new':t4_new,
-               't5_click':t5_click,'t5_new':t5_new,'t6_click':t6_click,'t6_new':t6_new
+    click = []# 保存６个点击量排序对象
+    new = []# 保存６个按照新品排序对象
+    for i in range(1,7):
+        # 根据分类查找，按照点击量排序，降序，返回一个t_click对象
+        t_click = GoodsInfo.objects.filter(gtype_id=i).order_by('-gclick')[0:3]
+        # 根据分类查找，按照新品排序，降序，返回一个t_click对象
+        t_new = GoodsInfo.objects.filter(gtype_id=i).order_by('-id')[0:4]
+        click.append(t_click)
+        new.append(t_new)
+    context = {'t1_click':click[0],'t1_new':new[0],
+               't2_click':click[1],'t2_new':new[1],
+               't3_click':click[2],'t3_new':new[2],
+               't4_click':click[3],'t4_new':new[3],
+               't5_click':click[4],'t5_new':new[4],
+               't6_click':click[5],'t6_new':new[5]
             }
     return render(request,'ds_goods/index.html',context) # 显示主页
 
@@ -35,6 +35,14 @@ def list(request,gid,gindex):
     t_new = GoodsInfo.objects.filter(gtype_id=gid).order_by('-id')[0:2]
     t_title = TypeInfo.objects.get(id=gid)
     paginator = Paginator(t_list,10)# 每页显示的数量
-    page = paginator.page(gindex)# 显示第几页
+    page = paginator.page(gindex)# 显示第几页内容，创建一个ｐａｇｅ对象
     context = {'t_title':t_title,'t_new':t_new,'page':page,'gid':gid,'num':num}
     return render(request,'ds_goods/list.html',context)
+
+
+def detail(request,gid):
+    t_goods = GoodsInfo.objects.get(id=gid)# 根据id查找，返回一个GoodsInfo对象
+    t_type = TypeInfo.objects.get(id=t_goods.gtype_id)# 根据分类查找，返回一个TypeInfo对象
+    t_new = GoodsInfo.objects.filter(gtype_id=t_goods.gtype_id).order_by('-id')[0:2]# 根据分类查找，按照新品排序，返回一个对象
+    context = {'t_goods':t_goods,'t_type':t_type,'t_new':t_new}
+    return render(request,'ds_goods/detail.html',context)

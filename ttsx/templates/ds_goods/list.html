@@ -1,29 +1,6 @@
-{%extends 'base_foot.html'%}
+{%extends 'ds_goods/base.html'%}
 {%block title%} <title>天天生鲜-商品列表</title>{%endblock title%}
 {%block content%}
-	<div class="navbar_con">
-		<div class="navbar clearfix">
-			<div class="subnav_con fl">
-				<h1>全部商品分类</h1>	
-				<span></span>
-				<ul class="subnav">
-					<li><a href="#" class="fruit">新鲜水果</a></li>
-					<li><a href="#" class="seafood">海鲜水产</a></li>
-					<li><a href="#" class="meet">猪牛羊肉</a></li>
-					<li><a href="#" class="egg">禽类蛋品</a></li>
-					<li><a href="#" class="vegetables">新鲜蔬菜</a></li>
-					<li><a href="#" class="ice">速冻食品</a></li>
-				</ul>
-			</div>
-			<ul class="navlist fl">
-				<li><a href="">首页</a></li>
-				<li class="interval">|</li>
-				<li><a href="">手机生鲜</a></li>
-				<li class="interval">|</li>
-				<li><a href="">抽奖</a></li>
-			</ul>
-		</div>
-	</div>
 
 	<div class="breadcrumb">
 		<a href="#">全部分类</a>
@@ -38,8 +15,8 @@
 				<ul>
 					{%for new in t_new%}
 					<li>
-						<a href="#"><img src="/static/{{new.gpic}}"></a>
-						<h4><a href="#">{{new.gtitle|truncatechars:15}}</a></h4>
+						<a href="/detail{{list.id}}/"><img src="/static/{{new.gpic}}"></a>
+						<h4><a href="/detail{{list.id}}/">{{new.gtitle|truncatechars:15}}</a></h4>
 						<div class="prize">￥{{new.gprice}}</div>
 					</li>
 					{%endfor%}
@@ -58,8 +35,8 @@
 			<ul class="goods_type_list clearfix">
 				{%for list in page%}
 				<li>
-					<a href="detail.html"><img src="/static/{{list.gpic}}"></a>
-					<h4><a href="detail.html">{{list.gtitle}}</a></h4>
+					<a href="/detail{{list.id}}/"><img src="/static/{{list.gpic}}"></a>
+					<h4><a href="/detail{{list.id}}/">{{list.gtitle}}</a></h4>
 					<div class="operate">
 						<span class="prize">￥{{list.gprice}}</span>
 						<span class="unit">{{list.gprice}}/{{list.gunit}}</span>
@@ -71,7 +48,7 @@
 
 			<div class="pagenation">
 				{%if page.has_previous%}
-				<a href="/list{{gid}}_{{page.number|add:-1}}/"><上一页</a>
+				<a href="/list{{gid}}_{{page.number|add:-1}}/?gnum={{num}}"><上一页</a>
 				{%endif%}
 
 				{%for index in page.paginator.page_range%}
@@ -83,7 +60,7 @@
 				{%endfor%}
 
 				{%if page.has_next%}
-					<a href="/list{{gid}}_{{page.number|add:1}}/">下一页></a>
+					<a href="/list{{gid}}_{{page.number|add:1}}/?gnum={{num}}">下一页></a>
 				{%endif%}
 			</div>
 		</div>
