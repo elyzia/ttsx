@@ -47,4 +47,26 @@ def detail(request,gid):
     t_goods.gclick = t_goods.gclick + 1
     t_goods.save()
     context = {'t_goods':t_goods,'t_type':t_type,'t_new':t_new}
-    return render(request,'ds_goods/detail.html',context)
+    response = render(request,'ds_goods/detail.html',context)
+    # 最近浏览
+    liulan = request.COOKIES.get('liulan','')
+    if liulan == '':
+        response.set_cookie('liulan',gid)
+    else:
+        liulan_list = liulan.split(',')
+        if gid in liulan_list:
+            liulan_list.remove(gid)
+        liulan_list.insert(0,gid)
+        if len(liulan_list) > 5:
+            liulan_list.pop()
+        liulan2 = ','.join(liulan_list)
+        response.set_cookie('liulan',liulan2)
+    return response
+
+
+from haystack.views import SearchView
+class MySearchView(SearchView):
+    def extra_context(self):
+        extra = super(MySearchView, self).extra_context()
+        extra['title']=self.request.GET.get('q')
+        return extra

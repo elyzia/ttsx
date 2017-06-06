@@ -4,7 +4,7 @@ from django.http import HttpResponse,HttpRequest,JsonResponse,HttpResponseRedire
 from models import *
 from hashlib import sha1
 from . import user_decorator
-
+from ds_goods.models import *
 # Create your views here.
 
 
@@ -78,10 +78,18 @@ def logout(request):
 @user_decorator.login
 def user_center_info(request):
     user = User.objects.get(id=request.session.get('user_id',''))
+    goods_list = []
+    goods_ids = request.COOKIES.get('liulan','')
+    #最近浏览
+    if goods_ids != '':
+        goods_ids1 = goods_ids.split(',')
+        for goods_ids in goods_ids1:
+            goods_list.append(GoodsInfo.objects.get(id = int(goods_ids)))
+
     tel = user.utel
     if tel == '':
         tel = "无"
-        context = {'uname':user.uname,'utel':tel,'uemail':user.ue_mail}
+        context = {'uname':user.uname,'utel':tel,'uemail':user.ue_mail,'goods_list':goods_list}
     return render(request,'ds_user/user_center_info.html',context)
 
 @user_decorator.login

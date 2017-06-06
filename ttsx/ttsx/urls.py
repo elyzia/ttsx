@@ -20,5 +20,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^',include('ds_user.urls')),
     url(r'^',include('ds_goods.urls')),
+    url(r'^search/', include('haystack.urls')),
+    url(r'^cart/',include('ds_cart.urls')),
 
 ]
