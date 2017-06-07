@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from models import *
 from django.core.paginator import Paginator,Page
+from ds_cart.models import *
 
 # Create your views here.
 def index(request):
@@ -19,7 +20,8 @@ def index(request):
                't3_click':click[2],'t3_new':new[2],
                't4_click':click[3],'t4_new':new[3],
                't5_click':click[4],'t5_new':new[4],
-               't6_click':click[5],'t6_new':new[5]
+               't6_click':click[5],'t6_new':new[5],
+               'cart_count':cart_count(request)
             }
     return render(request,'ds_goods/index.html',context) # 显示主页
 
@@ -36,7 +38,7 @@ def list(request,gid,gindex):
     t_title = TypeInfo.objects.get(id=gid)
     paginator = Paginator(t_list,10)# 每页显示的数量
     page = paginator.page(gindex)# 显示第几页内容，创建一个ｐａｇｅ对象
-    context = {'t_title':t_title,'t_new':t_new,'page':page,'gid':gid,'num':num}
+    context = {'t_title':t_title,'t_new':t_new,'page':page,'gid':gid,'num':num,'cart_count':cart_count(request)}
     return render(request,'ds_goods/list.html',context)
 
 
@@ -46,7 +48,7 @@ def detail(request,gid):
     t_new = GoodsInfo.objects.filter(gtype_id=t_goods.gtype_id).order_by('-id')[0:2]# 根据分类查找，按照新品排序，返回一个对象
     t_goods.gclick = t_goods.gclick + 1
     t_goods.save()
-    context = {'t_goods':t_goods,'t_type':t_type,'t_new':t_new}
+    context = {'t_goods':t_goods,'t_type':t_type,'t_new':t_new,'cart_count':cart_count(request)}
     response = render(request,'ds_goods/detail.html',context)
     # 最近浏览
     liulan = request.COOKIES.get('liulan','')
@@ -69,4 +71,13 @@ class MySearchView(SearchView):
     def extra_context(self):
         extra = super(MySearchView, self).extra_context()
         extra['title']=self.request.GET.get('q')
+        extra['cart_count']=cart_count(self.request)
         return extra
+
+
+def cart_count(request):
+    if request.session.has_key('user_id'):
+        return CartInfo.objects.filter(user_id=request.session['user_id']).count()
+    else:
+        return 0
+

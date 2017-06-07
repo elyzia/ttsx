@@ -4,6 +4,14 @@
 {%block head%}
 <script type="text/javascript">
 	function countTotal(){
+		count = parseInt($('.num_show').val());
+		if(count < 1){
+				$('.num_show').val(1);
+			}
+
+			else{
+				$('.num_show').val(count);
+			}
 		price = parseFloat($('.show_pirze > em').text());
 		count = parseInt($('.num_show').val());
 		$('.total > em').text((price*count).toFixed(2)+'元');
@@ -13,6 +21,8 @@
 
 	$(function(){
 		$('.num_show').blur(function(){
+
+
 			countTotal()
 		});
 
@@ -24,13 +34,6 @@
 
 		$('.minus').click(function(){
 			count = parseInt($('.num_show').val())-1;
-			if(count <= 1){
-				$('.num_show').val(1);
-			}
-
-			else{
-				$('.num_show').val(count);
-			}
 			countTotal()
 		});
 
@@ -108,7 +111,7 @@
 	</div>
 
 
-	<div class="add_jump"></div>
+<div class="add_jump"></div>
 
 	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
@@ -118,21 +121,21 @@
 		var $to_x = $('#show_count').offset().top;
 		var $to_y = $('#show_count').offset().left;
 
-		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+
+		$(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
 		$('#add_cart').click(function(){
 			$(".add_jump").stop().animate({
 				'left': $to_y+7,
 				'top': $to_x+7},
 				"fast", function() {
 					$(".add_jump").fadeOut('fast',function(){
-						$.get('/cart/add_{{t_goods.id}}_'+$('.num_show').val()+'/',function(data){
-							$('#show_count').html(data.count);
-						});
-
+                        $.get('/cart/add{{ t_goods.id }}_'+$('.num_show').val()+'/',function (data) {
+                            $('#show_count').html(data.count);
+                        });
 					});
 
 			});
 		})
-	</script>
+</script>
 	
 {%endblock content%}

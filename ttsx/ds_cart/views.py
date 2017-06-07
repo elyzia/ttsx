@@ -7,7 +7,7 @@ from models import *
 # Create your views here.
 
 @login
-def cart(request,gid,count):
+def add(request,gid,count):
     carts = CartInfo.objects.filter(goods_id=gid).filter(user_id=request.session['user_id'])
     if len(carts)==0:
         cart = CartInfo()
@@ -17,17 +17,24 @@ def cart(request,gid,count):
         cart.save()
     else:
         cart = carts[0]
-        cart.count += count
+        cart.count += int(count)
         cart.save()
     if request.is_ajax():
         return JsonResponse({'count': CartInfo.objects.filter(user_id=request.session['user_id']).count()})
 
     else:
-        return redirect('cart/list')
+        return redirect('/cart/list/')
 
 @login
+
 def list(request):
-    return HttpResponse('OK')
+    cart_list = CartInfo.objects.filter(user_id=request.session['user_id'])
+    context = {'cart_list':cart_list}
+    return render(request,'ds_cart/cart.html',context)
+
+# def counts(request):
+
+
 
 
 
