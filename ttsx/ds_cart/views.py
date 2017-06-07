@@ -26,13 +26,25 @@ def add(request,gid,count):
         return redirect('/cart/list/')
 
 @login
-
 def list(request):
     cart_list = CartInfo.objects.filter(user_id=request.session['user_id'])
     context = {'cart_list':cart_list}
     return render(request,'ds_cart/cart.html',context)
 
-# def counts(request):
+
+def alter_count(request):
+    id = request.GET.get('id')
+    count = request.GET.get('count')
+    cart= CartInfo.objects.get(id=int(id))
+    cart.count = int(count)
+    cart.save()
+    return JsonResponse({'count':cart.count})
+
+def delete(request):
+    id = request.GET.get('id')
+    cart = CartInfo.objects.get(id=int(id))
+    cart.delete()
+    return JsonResponse({'result':'ok'})
 
 
 
