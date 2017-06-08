@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'ds_goods',
     'haystack',
     'ds_cart',
+    'ds_order',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -31,27 +31,27 @@ def register_handle(request):
 
 def register_exist(request):# 进行注册验证
     uname = request.GET.get('uname')# 获取用户输入的name
-    count = User.objects.filter(uname=uname).count()# 在数据库查找获取到的名字个数
+    count = User.objects.filter(uname=uname).count()# 在数据库查找获取到的名字个数,如果为１就证明已经存在
     return JsonResponse({'count':count})# 返回一个ｊｓｏｎ对象
 
 
 def login(request):
-    uname = request.COOKIES.get('uname','')
+    uname = request.COOKIES.get('uname','')# 获取cookie里的uname信息,让它默认在输入框中
     context = {'uname':uname,'error_name':0,'error_pwd':0}
     return render(request,'ds_user/login.html',context)
 
 def login_handle(request):
-    post = request.POST
-    uname = post.get('username')
-    upwd = post.get('pwd')
-    jizhu = post.get('jizhu',0)
+    post = request.POST# 获取一个post对象
+    uname = post.get('username')# 以post的方式获取名字
+    upwd = post.get('pwd')# 以post的方式获取密码
+    jizhu = post.get('jizhu',0)# 获取记住的值，如果选中会返回一个１，如果没有选中默认为０
 
-    users = User.objects.filter(uname=uname)
+    users = User.objects.filter(uname=uname)#　根据名字去数据库查找
 
-    if len(users) == 1:
-        s1 = sha1()
-        s1.update(upwd)
-        if s1.hexdigest() == users[0].upasswd:
+    if len(users) == 1:# 如果查到
+        s1 = sha1()# 创建一个sha１对象
+        s1.update(upwd)# 将密码添加给s1
+        if s1.hexdigest() == users[0].upasswd:# 将现在加密的密码和之前加密的密码进行对比
             url = request.COOKIES.get('ulr','/')
             red = HttpResponseRedirect(url)
             red.set_cookie('url','',max_age=-1)
