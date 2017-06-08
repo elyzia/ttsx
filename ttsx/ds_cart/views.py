@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from ds_user.user_decorator import *
+from ds_user.models import *
 from models import *
 
 
@@ -45,6 +46,14 @@ def delete(request):
     cart = CartInfo.objects.get(id=int(id))
     cart.delete()
     return JsonResponse({'result':'ok'})
+
+
+def order(request):
+    user = User.objects.get(id=request.session['user_id'])
+    cart_id = request.GET.getlist('cart_id')
+    carts = CartInfo.objects.filter(id__in=cart_id)
+    context = {'user':user,'carts':carts}
+    return render(request,'ds_cart/order.html',context)
 
 
 
