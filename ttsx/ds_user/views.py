@@ -4,7 +4,9 @@ from django.http import HttpResponse,HttpRequest,JsonResponse,HttpResponseRedire
 from models import *
 from hashlib import sha1
 from . import user_decorator
+from django.core.paginator import Paginator,Page
 from ds_goods.models import *
+from ds_order.models import *
 # Create your views here.
 
 
@@ -93,8 +95,14 @@ def user_center_info(request):
     return render(request,'ds_user/user_center_info.html',context)
 
 @user_decorator.login
-def user_center_order(request):
-    return render(request,'ds_user/user_center_order.html')
+def user_center_order(request,pindex):
+    order_list = OrderInfo.objects.filter(user_id=request.session['user_id']).order_by('-oid')
+    paginator = Paginator(order_list, 10)
+    if pindex == '':
+        pindex = 1
+    page = paginator.page(int(pindex))
+    context = {'paginator':paginator,'page':page,'order_list':order_list}
+    return render(request,'ds_user/user_center_order.html',context)
 
 @user_decorator.login
 def user_center_site(request):

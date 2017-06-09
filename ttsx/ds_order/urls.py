@@ -4,6 +4,7 @@ import views
 
 urlpatterns = [
     
-    url(r'^$',views.order)
+    url(r'^$',views.order),
+    url(r'^pay(\d*)/$',views.pay)
 
 ]

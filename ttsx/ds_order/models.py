@@ -19,3 +19,7 @@ class OrderDetailInfo(models.Model):
     pirce = models.DecimalField(max_digits=5,decimal_places=2)# 价格
     count = models.IntegerField()# 数量
 
+
+
+
+
