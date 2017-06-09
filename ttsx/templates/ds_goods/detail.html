@@ -5,12 +5,17 @@
 <script type="text/javascript">
 	function countTotal(){
 		count = parseInt($('.num_show').val());
+		kucun = parseInt({{t_goods.gkucun}})
 		if(count < 1){
 				$('.num_show').val(1);
 			}
 
-			else{
-				$('.num_show').val(count);
+		else if(count>kucun){
+			$('.num_show').val(kucun);
+		}
+
+		else{
+			$('.num_show').val(count);
 			}
 		price = parseFloat($('.show_pirze > em').text());
 		count = parseInt($('.num_show').val());
@@ -61,6 +66,7 @@
 			<div class="prize_bar">
 				<span class="show_pirze">¥<em>{{t_goods.gprice}}</em></span>
 				<span class="show_unit">单  位：{{t_goods.gunit}}</span>
+				<span class="show_kucun">库  存：{{t_goods.gkucun}}</span>
 			</div>
 			<div class="goods_num clearfix">
 				<div class="num_name fl">数 量：</div>

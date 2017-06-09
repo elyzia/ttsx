@@ -82,9 +82,13 @@ def user_center_info(request):
     user = User.objects.get(id=request.session.get('user_id',''))
     goods_list = []
     goods_ids = request.COOKIES.get('liulan','')
+    request.session['liulan'] = goods_ids
+    request.session.set_expiry(60)
+
     #最近浏览
     if goods_ids != '':
         goods_ids1 = goods_ids.split(',')
+
         for goods_ids in goods_ids1:
             goods_list.append(GoodsInfo.objects.get(id = int(goods_ids)))
 

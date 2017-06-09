@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vmv%par-6=wyvx@@#mre5s+6%%qvq7n$q)i$w%$0&s^7j2fyvw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -114,6 +114,12 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
 
+STATIC_ROOT='/var/www/ttsx/static/'
+STATIC_URL='/static/'
+
+
+
+
 MIDIA_ROOT=os.path.join(BASE_DIR,'static')
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -132,3 +138,8 @@ HAYSTACK_CONNECTIONS = {
 }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_DOMAIN = '127.0.0.1'
+SESSION_COOKIE_NAME = 'sessionid'
+
